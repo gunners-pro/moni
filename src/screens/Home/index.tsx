@@ -1,4 +1,6 @@
 import React from 'react';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Dimensions, Text} from 'react-native';
 import {
   HandlerStateChangeEvent,
@@ -14,11 +16,17 @@ import {
 import {
   Container,
   Header,
-  Cards,
+  ListCards,
   BottomSheetList,
   ContainerToggleButtonBottomSheetList,
   ToggleButtonBottomSheetList,
   ContentBottomSheet,
+  Card,
+  CardHeader,
+  CardBottom,
+  CardTitle,
+  CardValue,
+  CardLastDate,
 } from './styles';
 
 const {height} = Dimensions.get('window');
@@ -52,9 +60,46 @@ export function Home() {
       <Header>
         <Text>Header</Text>
       </Header>
-      <Cards>
-        <Text>List Portfolio</Text>
-      </Cards>
+      <ListCards>
+        <Card>
+          <CardHeader>
+            <CardTitle>Entradas</CardTitle>
+            <MaterialCommunityIcons
+              name="arrow-top-right-bold-box"
+              size={32}
+              color="#5BA367"
+            />
+          </CardHeader>
+          <CardBottom>
+            <CardValue>R$ 1349,59</CardValue>
+            <CardLastDate>Última entrada 13 de Fevereiro de 2022</CardLastDate>
+          </CardBottom>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Saídas</CardTitle>
+            <MaterialCommunityIcons
+              name="arrow-bottom-left-bold-box"
+              size={32}
+              color="#ff1c1c"
+            />
+          </CardHeader>
+          <CardBottom>
+            <CardValue>R$ 1349,59</CardValue>
+            <CardLastDate>Última entrada 13 de Fevereiro de 2022</CardLastDate>
+          </CardBottom>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Saldo</CardTitle>
+            <MaterialIcons name="monetization-on" size={32} color="#2b5bfa" />
+          </CardHeader>
+          <CardBottom>
+            <CardValue>R$ 1349,59</CardValue>
+            <CardLastDate>Última entrada 13 de Fevereiro de 2022</CardLastDate>
+          </CardBottom>
+        </Card>
+      </ListCards>
       <BottomSheetList style={heightBottomStyle}>
         <ContainerToggleButtonBottomSheetList>
           <PanGestureHandler onHandlerStateChange={onHandlerStateChange}>
