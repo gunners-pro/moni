@@ -1,15 +1,20 @@
 import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {Home} from './src/screens/Home';
 
 const App = () => {
   return (
-    <GestureHandlerRootView>
-      <SafeAreaView>
-        <StatusBar />
-      </SafeAreaView>
+    <GestureHandlerRootView style={styles.root}>
+      <Home />
     </GestureHandlerRootView>
   );
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});
