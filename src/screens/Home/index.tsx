@@ -29,11 +29,12 @@ import {
   CardValue,
   CardLastDate,
 } from './styles';
+import {getLastFiveDays} from '../../utils/getLastFiveDays';
 
 const {height, width} = Dimensions.get('window');
 
 const graphs = {
-  labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+  labels: getLastFiveDays(new Date()),
   datasets: [
     {
       data: [985, 3420, 669.4, 329, 2846],
@@ -54,7 +55,6 @@ const chartConfig = {
 
 export function Home() {
   const heightBottom = useSharedValue(height / 3);
-
   const onHandlerStateChange = ({
     nativeEvent,
   }: HandlerStateChangeEvent<PanGestureHandlerEventPayload>) => {
