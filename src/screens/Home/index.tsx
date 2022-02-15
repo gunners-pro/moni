@@ -13,6 +13,7 @@ import {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
+import {LineChart} from 'react-native-chart-kit';
 import {
   Container,
   Header,
@@ -29,7 +30,27 @@ import {
   CardLastDate,
 } from './styles';
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
+
+const graphs = {
+  labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+  datasets: [
+    {
+      data: [985, 3420, 669.4, 329, 2846],
+      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+    },
+  ],
+  legend: ['Gastos'],
+};
+
+const chartConfig = {
+  backgroundGradientFrom: '#eff8f3',
+  backgroundGradientFromOpacity: 0.5,
+  backgroundGradientTo: '#dee7e2',
+  backgroundGradientToOpacity: 0.8,
+  color: () => '#5BA367',
+  useShadowColorFromDataset: true,
+};
 
 export function Home() {
   const heightBottom = useSharedValue(height / 3);
@@ -40,25 +61,36 @@ export function Home() {
     if (nativeEvent.oldState === State.ACTIVE) {
       const {translationY} = nativeEvent;
 
-      if (translationY <= -10) {
-        heightBottom.value = withSpring(height * 0.8, {damping: 10});
+      if (translationY <= -5) {
+        heightBottom.value = height * 0.8;
       }
-      if (translationY >= 10) {
-        heightBottom.value = withSpring(height / 3, {damping: 10});
+      if (translationY >= 5) {
+        heightBottom.value = height / 3;
       }
     }
   };
 
   const heightBottomStyle = useAnimatedStyle(() => {
     return {
-      height: heightBottom.value,
+      height: withSpring(heightBottom.value, {damping: 10}),
     };
   });
 
   return (
     <Container>
       <Header>
-        <Text>Header</Text>
+        <LineChart
+          data={graphs}
+          height={220}
+          width={width - 40}
+          chartConfig={chartConfig}
+          fromZero
+          yAxisLabel="R$"
+          style={{
+            borderRadius: 16,
+          }}
+          yLabelsOffset={5}
+        />
       </Header>
       <ListCards>
         <Card>

@@ -10,6 +10,9 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   flex: 1;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ListCards = styled.ScrollView.attrs({
