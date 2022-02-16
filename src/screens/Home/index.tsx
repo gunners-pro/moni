@@ -1,6 +1,4 @@
 import React from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Dimensions, Text} from 'react-native';
 import {
   HandlerStateChangeEvent,
@@ -22,14 +20,9 @@ import {
   ContainerToggleButtonBottomSheetList,
   ToggleButtonBottomSheetList,
   ContentBottomSheet,
-  Card,
-  CardHeader,
-  CardBottom,
-  CardTitle,
-  CardValue,
-  CardLastDate,
 } from './styles';
 import {getLastFiveDays} from '../../utils/getLastFiveDays';
+import {HighLightTransactionCard} from '../../components/HighLightTransactionCard';
 
 const {height, width} = Dimensions.get('window');
 
@@ -93,44 +86,30 @@ export function Home() {
         />
       </Header>
       <ListCards>
-        <Card>
-          <CardHeader>
-            <CardTitle>Entradas</CardTitle>
-            <MaterialCommunityIcons
-              name="arrow-top-right-bold-box"
-              size={32}
-              color="#5BA367"
-            />
-          </CardHeader>
-          <CardBottom>
-            <CardValue>R$ 1349,59</CardValue>
-            <CardLastDate>Última entrada 13 de Fevereiro de 2022</CardLastDate>
-          </CardBottom>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Saídas</CardTitle>
-            <MaterialCommunityIcons
-              name="arrow-bottom-left-bold-box"
-              size={32}
-              color="#ff1c1c"
-            />
-          </CardHeader>
-          <CardBottom>
-            <CardValue>R$ 1349,59</CardValue>
-            <CardLastDate>Última entrada 13 de Fevereiro de 2022</CardLastDate>
-          </CardBottom>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Saldo</CardTitle>
-            <MaterialIcons name="monetization-on" size={32} color="#2b5bfa" />
-          </CardHeader>
-          <CardBottom>
-            <CardValue>R$ 1349,59</CardValue>
-            <CardLastDate>Última entrada 13 de Fevereiro de 2022</CardLastDate>
-          </CardBottom>
-        </Card>
+        <HighLightTransactionCard
+          data={{
+            title: 'Entrada',
+            value: 'R$ 1349,25',
+            lastDate: '14 de Abril de 2022',
+            type: 'income',
+          }}
+        />
+        <HighLightTransactionCard
+          data={{
+            title: 'Saída',
+            value: 'R$ 449,25',
+            lastDate: '02 de Novembro de 2022',
+            type: 'outcome',
+          }}
+        />
+        <HighLightTransactionCard
+          data={{
+            title: 'Total',
+            value: 'R$ 1849,98',
+            lastDate: '26 de Setembro de 2022',
+            type: 'total',
+          }}
+        />
       </ListCards>
       <BottomSheetList style={heightBottomStyle}>
         <ContainerToggleButtonBottomSheetList>
