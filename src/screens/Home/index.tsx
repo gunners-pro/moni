@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, Text} from 'react-native';
 import {
   HandlerStateChangeEvent,
@@ -23,19 +23,10 @@ import {
 } from './styles';
 import {getLastFiveDays} from '../../utils/getLastFiveDays';
 import {HighLightTransactionCard} from '../../components/HighLightTransactionCard';
+import {api} from '../../services/api';
 
 const {height, width} = Dimensions.get('window');
-
-const graphs = {
-  labels: getLastFiveDays(new Date()),
-  datasets: [
-    {
-      data: [985, 3420, 669.4, 329, 2846],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
-    },
-  ],
-  legend: ['Gastos'],
-};
+const {fiveDaysAgo, numberOfTheDayOfTheWeek} = getLastFiveDays(new Date());
 
 const chartConfig = {
   backgroundGradientFrom: '#eff8f3',
@@ -46,7 +37,18 @@ const chartConfig = {
   useShadowColorFromDataset: true,
 };
 
+interface TransactionsProps {
+  id: string;
+  name: string;
+  category: string;
+  type: 'outcome' | 'income';
+  value: number;
+  created_at: string;
+}
+
 export function Home() {
+  const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
+  const [transactionsChart, setTransactionsChart] = useState<number[]>([]);
   const heightBottom = useSharedValue(height / 3);
   const onHandlerStateChange = ({
     nativeEvent,
@@ -69,21 +71,56 @@ export function Home() {
     };
   });
 
+  useEffect(() => {
+    let data = [];
+    for (var i = 0; i < numberOfTheDayOfTheWeek.length; i++) {
+      const transactionItem = transactions.filter(
+        transaction =>
+          transaction.type === 'outcome' &&
+          new Date(transaction.created_at).getDay() ===
+            numberOfTheDayOfTheWeek[i],
+      );
+      data.push(transactionItem[0]);
+    }
+    const newData = data.map(item => (item === undefined ? 0 : item.value));
+    setTransactionsChart(newData.reverse());
+  }, [transactions]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await api.get('/transactions');
+      setTransactions(response.data);
+    })();
+  }, []);
+
+  const graphs = {
+    labels: fiveDaysAgo,
+    datasets: [
+      {
+        data: transactionsChart,
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+      },
+    ],
+    legend: ['Gastos'],
+  };
+
   return (
     <Container>
       <Header>
-        <LineChart
-          data={graphs}
-          height={220}
-          width={width - 40}
-          chartConfig={chartConfig}
-          fromZero
-          yAxisLabel="R$"
-          style={{
-            borderRadius: 16,
-          }}
-          yLabelsOffset={5}
-        />
+        {transactionsChart.length > 0 && (
+          <LineChart
+            data={graphs}
+            height={220}
+            width={width - 40}
+            chartConfig={chartConfig}
+            fromZero
+            yAxisLabel="R$"
+            style={{
+              borderRadius: 16,
+            }}
+            yLabelsOffset={5}
+          />
+        )}
       </Header>
       <ListCards>
         <HighLightTransactionCard
