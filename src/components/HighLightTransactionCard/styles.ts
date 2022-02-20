@@ -22,16 +22,18 @@ export const CardHeader = styled.View`
 
 export const CardTitle = styled.Text`
   font-size: 20px;
+  font-family: ${({theme}) => theme.fonts.text};
 `;
 
 export const CardBottom = styled.View``;
 
 export const CardValue = styled.Text`
   font-size: 26px;
-  font-weight: bold;
+  font-family: ${({theme}) => theme.fonts.text_bold};
 `;
 
 export const CardLastDate = styled.Text`
   margin-top: 12px;
-  color: #a3aaa4bb;
+  color: ${({theme}) => theme.colors.text_light};
+  font-family: ${({theme}) => theme.fonts.text};
 `;

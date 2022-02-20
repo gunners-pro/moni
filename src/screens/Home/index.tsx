@@ -10,6 +10,7 @@ import {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import {LineChart} from 'react-native-chart-kit';
 import {
@@ -50,6 +51,8 @@ export function Home() {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
   const [transactionsChart, setTransactionsChart] = useState<number[]>([]);
   const heightBottom = useSharedValue(height / 3);
+  const heightListCards = useSharedValue(0);
+  const heightGraph = useSharedValue(0);
   const onHandlerStateChange = ({
     nativeEvent,
   }: HandlerStateChangeEvent<PanGestureHandlerEventPayload>) => {
@@ -58,9 +61,13 @@ export function Home() {
 
       if (translationY <= -5) {
         heightBottom.value = height * 0.8;
+        heightListCards.value = withTiming(-height / 2);
+        heightGraph.value = withTiming(-height / 4);
       }
       if (translationY >= 5) {
         heightBottom.value = height / 3;
+        heightListCards.value = withTiming(0);
+        heightGraph.value = withTiming(0);
       }
     }
   };
@@ -68,6 +75,18 @@ export function Home() {
   const heightBottomStyle = useAnimatedStyle(() => {
     return {
       height: withSpring(heightBottom.value, {damping: 10}),
+    };
+  });
+
+  const heightListCardsStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: heightListCards.value}],
+    };
+  });
+
+  const heightGraphStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: heightGraph.value}],
     };
   });
 
@@ -106,7 +125,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header>
+      <Header style={heightGraphStyle}>
         {transactionsChart.length > 0 && (
           <LineChart
             data={graphs}
@@ -122,7 +141,7 @@ export function Home() {
           />
         )}
       </Header>
-      <ListCards>
+      <ListCards style={heightListCardsStyle}>
         <HighLightTransactionCard
           data={{
             title: 'Entrada',
@@ -148,7 +167,7 @@ export function Home() {
           }}
         />
       </ListCards>
-      <BottomSheetList style={heightBottomStyle}>
+      <BottomSheetList style={[heightBottomStyle]}>
         <ContainerToggleButtonBottomSheetList>
           <PanGestureHandler onHandlerStateChange={onHandlerStateChange}>
             <ToggleButtonBottomSheetList />

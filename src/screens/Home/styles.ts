@@ -3,17 +3,17 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #f4f9f5;
+  background-color: ${({theme}) => theme.colors.background};
 `;
 
-export const Header = styled.View`
+export const Header = styled(Animated.View)`
   flex: 1;
   padding: 10px;
   align-items: center;
   justify-content: center;
 `;
 
-export const ListCards = styled.ScrollView.attrs({
+export const ListCards = styled(Animated.ScrollView).attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
   contentContainerStyle: {
@@ -26,7 +26,7 @@ export const ListCards = styled.ScrollView.attrs({
 `;
 
 export const BottomSheetList = styled(Animated.View)`
-  background-color: #f9fffb;
+  background-color: ${({theme}) => theme.colors.bottomSheetList};
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
 `;
@@ -38,7 +38,7 @@ export const ContainerToggleButtonBottomSheetList = styled.View`
 `;
 
 export const ToggleButtonBottomSheetList = styled.View`
-  background-color: #e9eeea;
+  background-color: ${({theme}) => theme.colors.gray};
   width: 40px;
   height: 15px;
   border-radius: 8px;
