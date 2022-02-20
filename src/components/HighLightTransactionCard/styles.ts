@@ -23,6 +23,7 @@ export const CardHeader = styled.View`
 export const CardTitle = styled.Text`
   font-size: 20px;
   font-family: ${({theme}) => theme.fonts.text};
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const CardBottom = styled.View``;
@@ -30,6 +31,7 @@ export const CardBottom = styled.View``;
 export const CardValue = styled.Text`
   font-size: 26px;
   font-family: ${({theme}) => theme.fonts.text_bold};
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const CardLastDate = styled.Text`

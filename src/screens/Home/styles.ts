@@ -44,6 +44,11 @@ export const ToggleButtonBottomSheetList = styled.View`
   border-radius: 8px;
 `;
 
-export const ContentBottomSheet = styled.View`
+export const ContentBottomSheet = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: 16,
+  },
+})`
   padding: 16px 24px;
 `;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Text} from 'react-native';
+import {Dimensions} from 'react-native';
 import {
   HandlerStateChangeEvent,
   PanGestureHandler,
@@ -25,6 +25,7 @@ import {
 import {getLastFiveDays} from '../../utils/getLastFiveDays';
 import {HighLightTransactionCard} from '../../components/HighLightTransactionCard';
 import {api} from '../../services/api';
+import {ItemTransaction} from '../../components/ItemTransaction';
 
 const {height, width} = Dimensions.get('window');
 const {fiveDaysAgo, numberOfTheDayOfTheWeek} = getLastFiveDays(new Date());
@@ -174,7 +175,16 @@ export function Home() {
           </PanGestureHandler>
         </ContainerToggleButtonBottomSheetList>
         <ContentBottomSheet>
-          <Text>My Stocks</Text>
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
+          <ItemTransaction />
         </ContentBottomSheet>
       </BottomSheetList>
     </Container>
