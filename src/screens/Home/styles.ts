@@ -1,5 +1,6 @@
 import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
+import {HEIGHT_BOTTOM_BAR} from '../../components/CustomBottomTabBar';
 
 export const Container = styled.View`
   flex: 1;
@@ -47,8 +48,8 @@ export const ToggleButtonBottomSheetList = styled.View`
 export const ContentBottomSheet = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    paddingBottom: 16,
+    paddingBottom: HEIGHT_BOTTOM_BAR + 8,
   },
 })`
-  padding: 16px 24px;
+  padding: 0 24px;
 `;
