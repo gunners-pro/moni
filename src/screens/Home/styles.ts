@@ -38,7 +38,7 @@ export const ContainerToggleButtonBottomSheetList = styled.View`
   padding: 8px;
 `;
 
-export const ToggleButtonBottomSheetList = styled.View`
+export const ToggleButtonBottomSheetList = styled(Animated.View)`
   background-color: ${({theme}) => theme.colors.gray};
   width: 40px;
   height: 15px;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, KeyboardAvoidingView} from 'react-native';
 import {
   HandlerStateChangeEvent,
   PanGestureHandler,
@@ -7,6 +7,7 @@ import {
   State,
 } from 'react-native-gesture-handler';
 import {
+  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -26,6 +27,7 @@ import {getLastFiveDays} from '../../utils/getLastFiveDays';
 import {HighLightTransactionCard} from '../../components/HighLightTransactionCard';
 import {api} from '../../services/api';
 import {ItemTransaction} from '../../components/ItemTransaction';
+import {SearchBarHome} from '../../components/SearchBarHome';
 
 const {height, width} = Dimensions.get('window');
 const {fiveDaysAgo, numberOfTheDayOfTheWeek} = getLastFiveDays(new Date());
@@ -51,6 +53,7 @@ interface TransactionsProps {
 export function Home() {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
   const [transactionsChart, setTransactionsChart] = useState<number[]>([]);
+  const isBottomSheetOpen = useSharedValue(false);
   const heightBottom = useSharedValue(height / 3);
   const heightListCards = useSharedValue(0);
   const heightGraph = useSharedValue(0);
@@ -63,7 +66,7 @@ export function Home() {
       if (translationY <= -5) {
         heightBottom.value = height * 0.8;
         heightListCards.value = withTiming(-height / 2);
-        heightGraph.value = withTiming(-height / 4);
+        heightGraph.value = withTiming(-height / 2);
       }
       if (translationY >= 5) {
         heightBottom.value = height / 3;
@@ -72,6 +75,19 @@ export function Home() {
       }
     }
   };
+  const onGestureHandler = useAnimatedGestureHandler({
+    onActive: ({translationY}) => {
+      if (!isBottomSheetOpen.value && translationY > 0) {
+        return;
+      } else if (isBottomSheetOpen.value && translationY < 0) {
+        return;
+      } else if (!isBottomSheetOpen.value && translationY < -5) {
+        isBottomSheetOpen.value = true;
+      } else if (isBottomSheetOpen.value && translationY > 5) {
+        isBottomSheetOpen.value = false;
+      }
+    },
+  });
 
   const heightBottomStyle = useAnimatedStyle(() => {
     return {
@@ -168,25 +184,30 @@ export function Home() {
           }}
         />
       </ListCards>
-      <BottomSheetList style={[heightBottomStyle]}>
-        <ContainerToggleButtonBottomSheetList>
-          <PanGestureHandler onHandlerStateChange={onHandlerStateChange}>
-            <ToggleButtonBottomSheetList />
-          </PanGestureHandler>
-        </ContainerToggleButtonBottomSheetList>
-        <ContentBottomSheet>
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-          <ItemTransaction />
-        </ContentBottomSheet>
-      </BottomSheetList>
+      <KeyboardAvoidingView behavior="height" style={{paddingTop: 20}}>
+        <BottomSheetList style={[heightBottomStyle]}>
+          <SearchBarHome isBottomSheetOpen={isBottomSheetOpen} />
+          <ContainerToggleButtonBottomSheetList>
+            <PanGestureHandler
+              onGestureEvent={onGestureHandler}
+              onHandlerStateChange={onHandlerStateChange}>
+              <ToggleButtonBottomSheetList />
+            </PanGestureHandler>
+          </ContainerToggleButtonBottomSheetList>
+          <ContentBottomSheet>
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+            <ItemTransaction />
+          </ContentBottomSheet>
+        </BottomSheetList>
+      </KeyboardAvoidingView>
     </Container>
   );
 }
