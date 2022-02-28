@@ -30,7 +30,8 @@ import {ItemTransaction} from '../../components/ItemTransaction';
 import {SearchBarHome} from '../../components/SearchBarHome';
 
 const {height, width} = Dimensions.get('window');
-const {fiveDaysAgo, numberOfTheDayOfTheWeek} = getLastFiveDays(new Date());
+const {labelFiveDaysAgo, numberOfTheDayOfTheWeek, dateFiveDaysAgo} =
+  getLastFiveDays(new Date());
 
 const chartConfig = {
   backgroundGradientFrom: '#eff8f3',
@@ -109,16 +110,24 @@ export function Home() {
 
   useEffect(() => {
     let data = [];
+    console.log(dateFiveDaysAgo);
     for (var i = 0; i < numberOfTheDayOfTheWeek.length; i++) {
-      const transactionItem = transactions.filter(
-        transaction =>
+      const transactionItem = transactions.filter(transaction => {
+        const currentData = new Date(transaction.created_at);
+        // console.log(currentData.getDate());
+
+        return (
           transaction.type === 'outcome' &&
-          new Date(transaction.created_at).getDay() ===
-            numberOfTheDayOfTheWeek[i],
-      );
+          currentData.getDay() === numberOfTheDayOfTheWeek[i] &&
+          currentData.getDate() === dateFiveDaysAgo[i]
+        );
+      });
       data.push(transactionItem[0]);
     }
+    // console.log(data);
+    // console.log(new Date(data[0].created_at).getDate());
     const newData = data.map(item => (item === undefined ? 0 : item.value));
+    console.log(newData);
     setTransactionsChart(newData.reverse());
   }, [transactions]);
 
@@ -130,7 +139,7 @@ export function Home() {
   }, []);
 
   const graphs = {
-    labels: fiveDaysAgo,
+    labels: labelFiveDaysAgo,
     datasets: [
       {
         data: transactionsChart,

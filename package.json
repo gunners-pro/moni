@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "api": "json-server ./src/services/server.json --host 192.168.0.14 --port 3333 --delay 1300"
+    "api": "json-server --watch ./src/services/server.json --host 192.168.0.14 --port 3333 --delay 1300"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.2.0",
