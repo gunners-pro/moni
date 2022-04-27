@@ -14,6 +14,7 @@ export default {
     background: '#f4f9f5',
     bottomSheetList: '#f9fffb',
     gray: '#e9eeea',
+    green_light: '#b1d1ab',
   },
   fonts: {
     title: 'Gideon Roman',
