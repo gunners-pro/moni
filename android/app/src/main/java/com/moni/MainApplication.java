@@ -1,7 +1,9 @@
 package com.moni;
 
 import com.facebook.react.bridge.JSIModulePackage;
-import com.swmansion.reanimated.ReanimatedJSIModulePackage; 
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
+
+import com.BV.LinearGradient.LinearGradientPackage;
 
 import android.app.Application;
 import android.content.Context;
@@ -29,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          packages.add(new LinearGradientPackage());
           return packages;
         }
 
@@ -39,7 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected JSIModulePackage getJSIModulePackage() {
-          return new ReanimatedJSIModulePackage();   
+          return new ReanimatedJSIModulePackage();
         }
       };
 
