@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "733347814242",
+    "project_id": "moni-f2a80",
+    "storage_bucket": "moni-f2a80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733347814242:android:70997142cd81e63cfdaa3b",
+        "android_client_info": {
+          "package_name": "com.moni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733347814242-qe54s3815paschsm0opb80t9rrlc0qb3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYtyzwuveqT6OeEXcKR1y6Y-70B6Q6yKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733347814242-qe54s3815paschsm0opb80t9rrlc0qb3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

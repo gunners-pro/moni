@@ -1,4 +1,5 @@
 import React from 'react';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import {
   Gradient,
   Container,
@@ -15,6 +16,19 @@ import LandingImg from '../../assets/cofre.svg';
 import LogoGmailImg from '../../assets/gmail.png';
 
 function Login() {
+  GoogleSignin.configure({
+    webClientId: process.env.WEB_CLIENT_ID,
+  });
+
+  async function signIn() {
+    try {
+      const info = await GoogleSignin.signIn();
+      console.log(info.user);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <StatusBar />
@@ -31,7 +45,7 @@ function Login() {
               financeira.
             </SubTitle>
 
-            <LoginButton>
+            <LoginButton onPress={signIn}>
               <TextLoginButton>Entrar com</TextLoginButton>
               <LogoGmail source={LogoGmailImg} />
             </LoginButton>
